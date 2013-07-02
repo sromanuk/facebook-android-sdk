@@ -216,7 +216,7 @@ public class LoginButton extends Button {
                 // of a background resource.
                 this.setBackgroundColor(getResources().getColor(R.color.com_facebook_blue));
                 // hardcoding in edit mode as getResources().getString() doesn't seem to work in IntelliJ
-                loginText = "Log in";
+                loginText = "";
             } else {
                 this.setBackgroundResource(R.drawable.com_facebook_loginbutton_blue);
             }
