@@ -153,16 +153,17 @@ class AuthorizationClient implements Serializable {
         ArrayList<AuthHandler> handlers = new ArrayList<AuthHandler>();
 
         final SessionLoginBehavior behavior = request.getLoginBehavior();
+
+        if (behavior.allowsWebViewAuth()) {
+            handlers.add(new WebViewAuthHandler());
+        }
+
         if (behavior.allowsKatanaAuth()) {
             if (!request.isLegacy()) {
                 handlers.add(new GetTokenAuthHandler());
                 handlers.add(new KatanaLoginDialogAuthHandler());
             }
             handlers.add(new KatanaProxyAuthHandler());
-        }
-
-        if (behavior.allowsWebViewAuth()) {
-            handlers.add(new WebViewAuthHandler());
         }
 
         return handlers;
