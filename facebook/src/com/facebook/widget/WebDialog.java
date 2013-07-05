@@ -153,10 +153,14 @@ public class WebDialog extends Dialog {
         if (webView != null) {
             webView.stopLoading();
         }
+        if (spinner.isShowing()) {
+            spinner.dismiss();
+        }
+
         if (!isDetached) {
-            if (spinner.isShowing()) {
-                spinner.dismiss();
-            }
+//            if (spinner.isShowing()) {
+//                spinner.dismiss();
+//            }
             super.dismiss();
         }
     }
@@ -358,7 +362,13 @@ public class WebDialog extends Dialog {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             Utility.logd(LOG_TAG, "Webview loading URL: " + url);
             super.onPageStarted(view, url, favicon);
+
+            if (spinner.isShowing()) {
+                spinner.dismiss();
+            }
+
             if (!isDetached) {
+
                 spinner.show();
             }
         }
@@ -366,9 +376,12 @@ public class WebDialog extends Dialog {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            if (!isDetached) {
+            if (spinner.isShowing()) {
                 spinner.dismiss();
             }
+//            if (!isDetached) {
+//                spinner.dismiss();
+//            }
             /*
              * Once web view is fully loaded, set the contentFrameLayout background to be transparent
              * and make visible the 'x' image.
